@@ -20,6 +20,8 @@ okhttpVersion = "5.5.0"
 foundationLayout = "1.12.1"
 roomVersion = "2.8.5"
 uiTest = "1.12.1"
+browser = "1.9.0"
+runtime = "1.12.1"
 
 
 [libraries]
@@ -67,6 +69,9 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "roomVersion" }
 kotlinx-coroutines-bom = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-bom", version = "1.11.0" }
 androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitVersion" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+
 
 [bundles]
 coil = [ "coil-compose", "coil-loader" ]

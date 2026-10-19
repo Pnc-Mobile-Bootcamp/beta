@@ -27,6 +27,10 @@ android {
         testInstrumentationRunner = "com.pnc.jetpackcomposedemos.HiltTestRunner"
         buildConfigField("String", "BASE_URL", "\"https://kazoopromotions.com/api/\"")
         buildConfigField("String", "AW_BASE_URL", "\"https://api.bootcampcentral.com/api/\"")
+        buildConfigField("String", "AUTH_BASE_URL", "\"https://api.bootcampcentral.com/\"")
+        buildConfigField("String", "OIDC_CLIENT_ID", "\"adventureworks-mobile\"")
+        buildConfigField("String", "OIDC_REDIRECT_URI", "\"com.pnc.jetpackcomposedemos:/oauth2redirect\"")
+        buildConfigField("String", "OIDC_SCOPES", "\"openid profile offline_access orders.read\"")
     }
 
     buildTypes {
@@ -59,6 +63,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -99,6 +104,7 @@ dependencies {
     androidTestImplementation(platform(libs.kotlinx.coroutines.bom))
     androidTestImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.browser)
 }
 
 configurations.configureEach {

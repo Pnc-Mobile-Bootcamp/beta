@@ -6,6 +6,7 @@ import androidx.compose.material3.adaptive.currentWindowAdaptiveInfoV2
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,6 +20,7 @@ import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.Art
 import com.pnc.jetpackcomposedemos.features.auth.domain.AuthState
 import com.pnc.jetpackcomposedemos.features.auth.presentation.AuthViewModel
 import com.pnc.jetpackcomposedemos.features.auth.presentation.LoginScreen
+import com.pnc.jetpackcomposedemos.features.auth.presentation.SignInScreen
 import com.pnc.jetpackcomposedemos.features.boardmembers.domain.BoardMember
 import com.pnc.jetpackcomposedemos.features.boardmembers.presentation.BoardMemberDetails
 import com.pnc.jetpackcomposedemos.features.boardmembers.presentation.BoardMemberList
@@ -28,7 +30,7 @@ import com.pnc.jetpackcomposedemos.legacy.LegacyArtistList
 
 @Composable
 fun EventPlannerApp(
-    viewModel: AuthViewModel = viewModel()
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     val authState by viewModel.uiState.collectAsState()
 
@@ -42,10 +44,13 @@ fun EventPlannerApp(
 
     when (authState) {
         is AuthState.Unauthenticated -> {
-            LoginScreen(
-                onLoginSuccess = { user ->
-                viewModel.login(user)
-                }
+//            LoginScreen(
+//                onLoginSuccess = { user ->
+//                viewModel.login(user)
+//                }
+//            )
+            SignInScreen(
+                onSignedIn = { user -> viewModel.login(user) }
             )
         }
         is AuthState.Authenticated -> {
