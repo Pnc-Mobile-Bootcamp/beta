@@ -3,7 +3,9 @@ package com.pnc.jetpackcomposedemos.core
 import com.pnc.jetpackcomposedemos.BuildConfig
 import com.pnc.jetpackcomposedemos.features.artists.data.ArtistDataSource
 import com.pnc.jetpackcomposedemos.features.artists.data.RemoteArtistDataSource
+import com.pnc.jetpackcomposedemos.features.orders.data.MyOrdersDataSource
 import com.pnc.jetpackcomposedemos.features.orders.data.OrderDataSource
+import com.pnc.jetpackcomposedemos.features.orders.data.RemoteMyOrdersDataSource
 import com.pnc.jetpackcomposedemos.features.orders.data.RemoteOrderDataSource
 import dagger.Module
 import dagger.Provides
@@ -28,8 +30,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        tokenAuthenticator: TokenAuthenticator
+    ): OkHttpClient {
         return OkHttpClient.Builder()
+            // added before the logger so the logger shows the final request
+            .addInterceptor(authInterceptor)
+            .authenticator(tokenAuthenticator)
             .apply {
                 if (BuildConfig.DEBUG) {
                     addInterceptor(HttpLoggingInterceptor().apply {
@@ -83,6 +91,16 @@ object NetworkModule {
     ): OrderDataSource {
         return retrofit.create(
             RemoteOrderDataSource::class.java
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyOrdersDataSource(
+        @AdventureWorks retrofit: Retrofit
+    ): MyOrdersDataSource {
+        return retrofit.create(
+            RemoteMyOrdersDataSource::class.java
         )
     }
 

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,13 @@ class OrdersViewModel @Inject constructor(
                 _uiState.value = LoadableState.Success(orders)
             } catch (e: CancellationException) {
                 throw e
+            } catch (e: HttpException) {
+                val message = when (e.code()) {
+                    401 -> "Your session has expired. Please sign in again."
+                    403 -> "You are not allowed to see these orders."
+                    else -> "The server returned an error (${e.code()})."
+                }
+                _uiState.value = LoadableState.Error(message)
             } catch (e: Exception) {
                 _uiState.value = LoadableState.Error(e.message ?: "Unknown error")
             }

@@ -12,6 +12,10 @@ class FakeAuthApi: AuthApi {
     var lastVerifier: String? = null
     var lastRedirectUri: String? = null
 
+    var refreshCalls = 0
+    var lastRefreshToken: String? = null
+    var refreshFailure: Throwable? = null
+
     override suspend fun exchangeCode(
         grantType: String, clientId: String, code: String, redirectUri: String, codeVerifier: String
     ): TokenResponse {
@@ -24,7 +28,9 @@ class FakeAuthApi: AuthApi {
     }
 
     override suspend fun refresh(grantType: String, clientId: String, refreshToken: String): TokenResponse {
-        failure?.let { throw it }
+        refreshCalls++
+        lastRefreshToken = refreshToken
+        refreshFailure?.let { throw it }
         return response!!
     }
 

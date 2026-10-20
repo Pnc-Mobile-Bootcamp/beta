@@ -13,6 +13,8 @@ import javax.inject.Singleton
 import java.io.IOException
 import retrofit2.HttpException
 
+class RefreshRejectedException(message: String) : Exception(message)
+
 @Singleton
 class OidcClient @Inject constructor(
     private val authApi: AuthApi
@@ -115,6 +117,37 @@ class OidcClient @Inject constructor(
             Json.parseToJsonElement(body).jsonObject["error_description"]?.jsonPrimitive?.contentOrNull
         }.getOrNull()
         return description ?: "The server rejected the sign-in (HTTP ${e.code()})."
+    }
+
+    suspend fun refresh(user: User): Result<User> {
+        val refreshToken = user.refreshToken
+            ?: return Result.failure(RefreshRejectedException("There is no refresh token."))
+
+        return try {
+            val tokens = authApi.refresh(
+                grantType = "refresh_token",
+                clientId = BuildConfig.OIDC_CLIENT_ID,
+                refreshToken = refreshToken
+            )
+            Result.success(
+                user.copy(
+                    token = tokens.accessToken,
+                    // Rotation: the server issues a new refresh token each time. Keep the newest one.
+                    refreshToken = tokens.refreshToken ?: refreshToken,
+                    expiresAtMillis = System.currentTimeMillis() + tokens.expiresIn * 1000
+                )
+            )
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: HttpException) {
+            if (e.code() in 400..499) {
+                Result.failure(RefreshRejectedException(describe(e)))
+            } else {
+                Result.failure(IllegalStateException(describe(e), e))
+            }
+        } catch (e: IOException) {
+            Result.failure(IllegalStateException("Could not reach the server.", e))
+        }
     }
 
 

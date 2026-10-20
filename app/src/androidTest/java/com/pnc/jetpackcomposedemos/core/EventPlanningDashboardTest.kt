@@ -45,9 +45,9 @@ class EventPlanningDashboardTest {
     @Test
     fun givenDashboard_whenShown_thenDisplaysAllFourButtons() {
         listOf(
-            "view-artist-button",
+            "view-artists-button",
             "view-board-button",
-            "view-orders-button",
+            "view-order-button",
             "view-todo-button"
         ).forEach { label ->
             composeRule.onNode(hasTestTag(label)).assertIsDisplayed()
@@ -57,7 +57,7 @@ class EventPlanningDashboardTest {
     @Test
     fun givenDashboard_whenViewArtistsTapped_thenOnViewArtistsIsCalled() {
 
-        composeRule.onNode(hasTestTag("view-artist-button")).performClick()
+        composeRule.onNode(hasTestTag("view-artists-button")).performClick()
 
         assertEquals(listOf("artists"), calls)
     }
@@ -67,7 +67,7 @@ class EventPlanningDashboardTest {
         val expectations = mapOf(
             "view-artists-button" to "artists",
             "view-board-button" to "board members",
-            "view-orders-button" to "orders",
+            "view-order-button" to "orders",
             "view-todo-button" to "todos"
         )
 

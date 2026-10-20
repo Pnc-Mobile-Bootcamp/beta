@@ -18,7 +18,8 @@ fun EventPlanningDashboard(
     onViewArtists: () -> Unit,
     onViewBoardMembers: () -> Unit,
     onViewOrders: () -> Unit,
-    onViewToDos: () -> Unit
+    onViewToDos: () -> Unit,
+    onSignOut: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -61,6 +62,14 @@ fun EventPlanningDashboard(
         ) {
             Text("View To-Dos")
         }
+
+        Button(
+            onClick = onSignOut,
+            modifier = Modifier.fillMaxWidth().testTag("sign-out-button")
+        ) {
+            Text("Sign out")
+        }
+
 
     }
 
