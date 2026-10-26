@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -31,7 +32,7 @@ fun ArtistCard(
     artist: Artist,
     onClick: () -> Unit
 ) {
-    var isFavorite by remember {
+    var isFavorite by rememberSaveable() {
         mutableStateOf(false)
     }
 

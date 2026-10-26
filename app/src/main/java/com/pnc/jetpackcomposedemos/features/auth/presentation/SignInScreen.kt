@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pnc.jetpackcomposedemos.features.auth.domain.User
 
 @Composable
@@ -28,7 +29,7 @@ fun SignInScreen(
     viewModel: SignInViewModel = hiltViewModel(),
     onSignedIn: (User) -> Unit = {}   // used from Demo 4
 ) {
-    val state by viewModel.uiState.collectAsState()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     Column(

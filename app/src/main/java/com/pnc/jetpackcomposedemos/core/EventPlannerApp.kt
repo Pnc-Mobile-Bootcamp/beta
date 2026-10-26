@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,7 +34,7 @@ import com.pnc.jetpackcomposedemos.legacy.LegacyArtistList
 fun EventPlannerApp(
     viewModel: AuthViewModel = hiltViewModel()
 ) {
-    val authState by viewModel.uiState.collectAsState()
+    val authState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val windowSizeClass = currentWindowAdaptiveInfoV2().windowSizeClass
     val useTwoPaneLayout = windowSizeClass.isWidthAtLeastBreakpoint(
