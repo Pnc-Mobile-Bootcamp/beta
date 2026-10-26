@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
+import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -62,11 +63,11 @@ fun ToDosList(
         LazyVerticalGrid(
             columns = GridCells.Fixed(if (useTwoPaneLayout) 2 else 1),
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            contentPadding = PaddingValues(LocalSpacing.current.large),
+            verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium),
+            horizontalArrangement = Arrangement.spacedBy(LocalSpacing.current.medium)
         ) {
-            items(toDos) { toDo: ToDo ->
+            items(toDos, key = { it.id }) { toDo: ToDo ->
                 ToDoCard(
                     toDo = toDo,
                     onDoubleTap = {

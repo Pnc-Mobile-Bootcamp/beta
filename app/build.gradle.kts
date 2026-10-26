@@ -11,6 +11,12 @@ room {
     schemaDirectory("${projectDir}/schemas")
 }
 
+composeCompiler {
+    reportsDestination.set(layout.buildDirectory.dir("compose_compiler"))
+    metricsDestination.set(layout.buildDirectory.dir("compose_compiler"))
+    stabilityConfigurationFiles.add(layout.projectDirectory.file("compose_stability.conf"))
+}
+
 android {
     namespace = "com.pnc.jetpackcomposedemos"
     compileSdk {
