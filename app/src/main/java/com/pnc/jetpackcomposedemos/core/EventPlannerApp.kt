@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import androidx.window.core.layout.WindowSizeClass
 import com.pnc.jetpackcomposedemos.BuildConfig
+import com.pnc.jetpackcomposedemos.core.settings.SettingsScreen
 import com.pnc.jetpackcomposedemos.features.artists.domain.Artist
 import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.ArtistDetails
 import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.ArtistDirectoryRoute
@@ -79,6 +80,9 @@ fun EventPlannerApp(
                         },
                         onSignOut = {
                             viewModel.logout()
+                        },
+                        onSettings = {
+                            navController.navigate(SettingsRoute)
                         }
                     )
                 }
@@ -136,6 +140,10 @@ fun EventPlannerApp(
 
                 composable<ToDosRoute> {
                     ToDosScreen(useTwoPaneLayout = useTwoPaneLayout)
+                }
+
+                composable<SettingsRoute> {
+                    SettingsScreen()
                 }
 
 

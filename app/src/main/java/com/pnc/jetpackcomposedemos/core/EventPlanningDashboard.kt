@@ -21,7 +21,8 @@ fun EventPlanningDashboard(
     onViewBoardMembers: () -> Unit,
     onViewOrders: () -> Unit,
     onViewToDos: () -> Unit,
-    onSignOut: () -> Unit = {}
+    onSignOut: () -> Unit = {},
+    onSettings: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -63,6 +64,14 @@ fun EventPlanningDashboard(
                 .testTag("view-todo-button")
         ) {
             Text(stringResource(R.string.dashboard_view_todos))
+        }
+
+        Button(
+            onClick = onSettings,
+            modifier = Modifier.fillMaxWidth()
+                .testTag("settings-button")
+        ) {
+            Text(stringResource(R.string.dashboard_settings))
         }
 
         Button(

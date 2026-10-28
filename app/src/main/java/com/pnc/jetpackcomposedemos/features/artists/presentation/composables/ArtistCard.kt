@@ -25,8 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pnc.jetpackcomposedemos.R
+import com.pnc.jetpackcomposedemos.core.settings.LocalAppSettings
 import com.pnc.jetpackcomposedemos.features.artists.domain.Artist
 import com.pnc.jetpackcomposedemos.ui.theme.JetpackComposeDemosTheme
+import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 
 @Composable
 fun ArtistCard(
@@ -55,7 +57,7 @@ fun ArtistCard(
         shape = MaterialTheme.shapes.medium,
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(LocalSpacing.current.large)
         ) {
             IconToggleButton(
                 checked = isFavorite,
@@ -87,7 +89,9 @@ fun ArtistCard(
             Text(
                 stringResource(R.string.artist_genre, artist.genre)
             )
-            Text(stringResource(R.string.artist_location, artist.location))
+            if (LocalAppSettings.current.showArtistLocation) {
+                Text(stringResource(R.string.artist_location, artist.location))
+            }
         }
     }
 
