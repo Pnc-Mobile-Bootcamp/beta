@@ -39,7 +39,15 @@ android {
         buildConfigField("String", "OIDC_SCOPES", "\"openid profile offline_access orders.read\"")
     }
 
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     buildTypes {
+        debug {
+            isPseudoLocalesEnabled = true
+        }
+
         release {
             optimization {
                 enable = false

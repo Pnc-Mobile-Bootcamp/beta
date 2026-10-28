@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.core.LoadableState
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
 
@@ -25,11 +27,11 @@ fun ToDosScreen(
 
     when (uiState) {
         is LoadableState.Loading -> CircularProgressIndicator()
-        is LoadableState.Empty -> Text("No to-dos")
+        is LoadableState.Empty -> Text(stringResource(R.string.todo_empty))
         is LoadableState.Error -> {
             val errorMessage = (uiState as LoadableState.Error).message
             Text(
-                "Error: $errorMessage",
+                stringResource(R.string.common_error, errorMessage),
                 color = MaterialTheme.colorScheme.error
             )
         }

@@ -14,7 +14,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
 
 @Composable
@@ -34,10 +36,10 @@ fun ToDoCard(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             if (toDo.completed) {
-                Icon(Icons.Default.Check, "Completed",
+                Icon(Icons.Default.Check, stringResource(R.string.todo_completed),
                     tint = MaterialTheme.colorScheme.primary)
             } else {
-                Icon(Icons.Filled.CropSquare, "Not completed",
+                Icon(Icons.Filled.CropSquare, stringResource(R.string.todo_not_completed),
                     tint = MaterialTheme.colorScheme.tertiary)
             }
             Text(toDo.title)

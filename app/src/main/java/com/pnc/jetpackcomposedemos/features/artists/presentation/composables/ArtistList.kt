@@ -20,7 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.features.artists.domain.Artist
 import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 import kotlinx.coroutines.launch
@@ -79,7 +81,7 @@ fun ArtistList(
                     listState.animateScrollToItem(0)
                 }}
             ) {
-                Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Scroll to top")
+                Icon(Icons.Filled.KeyboardArrowUp, contentDescription = stringResource(R.string.artists_scroll_top))
             }
         }
 

@@ -18,10 +18,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.features.auth.domain.User
 
 @Composable
@@ -41,21 +43,21 @@ fun SignInScreen(
             val url = viewModel.startSignIn()
             CustomTabsIntent.Builder().build().launchUrl(context, url.toUri())
         }) {
-            Text("Sign in")
+            Text(stringResource(R.string.sign_in_button))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         when (val current = state) {
             SignInUiState.Idle -> {}
-            SignInUiState.InBrowser -> Text("Waiting for the browser...")
+            SignInUiState.InBrowser -> Text(stringResource(R.string.sign_in_waiting))
             SignInUiState.Exchanging -> CircularProgressIndicator()
             is SignInUiState.Success -> {
-                Text("Welcome, ${current.user.username}")
+                Text(stringResource(R.string.common_welcome, current.user.username))
                 LaunchedEffect(current.user) { onSignedIn(current.user) }
             }
             is SignInUiState.Error -> Text(
-                "Error: ${current.message}",
+                stringResource(R.string.common_error, current.message),
                 color = MaterialTheme.colorScheme.error
             )
         }

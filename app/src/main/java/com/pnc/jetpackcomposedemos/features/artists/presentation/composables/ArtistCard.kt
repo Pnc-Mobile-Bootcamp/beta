@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pnc.jetpackcomposedemos.R
@@ -66,7 +67,9 @@ fun ArtistCard(
                     painter = painterResource(
                         id = if (isFavorite) R.drawable.filled_star else R.drawable.outline_star
                     ),
-                    contentDescription = if (isFavorite) "Favorite" else "Not favorite",
+                    contentDescription = stringResource(
+                        if (isFavorite) R.string.artist_favorite else R.string.artist_not_favorite
+                    ),
                     tint = if (isFavorite)
                         MaterialTheme.colorScheme.primary
                     else
@@ -82,9 +85,9 @@ fun ArtistCard(
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                "Genre: ${artist.genre}"
+                stringResource(R.string.artist_genre, artist.genre)
             )
-            Text("Location: ${artist.location}")
+            Text(stringResource(R.string.artist_location, artist.location))
         }
     }
 

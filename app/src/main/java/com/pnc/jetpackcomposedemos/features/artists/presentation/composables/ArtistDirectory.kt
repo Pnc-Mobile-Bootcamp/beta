@@ -32,7 +32,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.core.presentation.TextFilter
 import com.pnc.jetpackcomposedemos.features.artists.domain.Artist
 import com.pnc.jetpackcomposedemos.features.artists.presentation.state.ArtistDirectoryState
@@ -55,28 +58,35 @@ fun ArtistDirectory(
             Column {
                 TopAppBar(
                     title = {
-                        Text("Available Artists")
+                        Text(stringResource(R.string.artists_title))
                     },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Return to dashboard"
+                                contentDescription = stringResource(R.string.artists_back)
                             )
                         }
                     }
                 )
                 Text(
-                    text = "Displaying ${state.displayedArtists.size} artists",
+                    text = pluralStringResource(
+                        R.plurals.artists_displaying,
+                        state.displayedArtists.size,
+                        state.displayedArtists.size
+                    ),
                     modifier = Modifier.padding(0.dp, 12.dp)
                 )
             }
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                text = { Text("Show filter") },
+                text = { Text(stringResource(R.string.artists_show_filter)) },
                 icon = {
-                    Icon(Icons.Filled.Filter, contentDescription = "Show filter")
+                    Icon(
+                        Icons.Filled.Filter,
+                        contentDescription = stringResource(R.string.artists_show_filter)
+                    )
                 },
                 onClick = {
                     onShowFilterChange(true)
@@ -104,7 +114,7 @@ fun ArtistDirectory(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("Selected artist")
+                    Text(stringResource(R.string.artists_selected))
                     val selectedArtist = state.selectedArtist
                     AnimatedVisibility(
                         visible = selectedArtist != null,
@@ -141,16 +151,16 @@ fun ArtistDirectory(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Text(
-                        text = "Filter Artists",
+                        text = stringResource(R.string.artists_filter_title),
                         style = MaterialTheme.typography.titleSmall
                     )
                     TextFilter(
-                        label = "Genre",
+                        label = stringResource(R.string.artists_genre_label),
                         filter = state.genreFilter,
                         onFilterChange = onGenreChange
                     )
                     TextFilter(
-                        label = "Location",
+                        label = stringResource(R.string.artists_location_label),
                         filter = state.locationFilter,
                         onFilterChange = onLocationChange
                     )
@@ -167,7 +177,7 @@ fun ArtistDirectory(
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                         ) {
-                            Text("Clear")
+                            Text(stringResource(R.string.common_clear))
                         }
 
                         Button(
@@ -175,7 +185,7 @@ fun ArtistDirectory(
                                 onShowFilterChange(false)
                             }
                         ) {
-                            Text("Close")
+                            Text(stringResource(R.string.common_close))
                         }
                     }
 
