@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +29,7 @@ import com.pnc.jetpackcomposedemos.core.LoadableState
 import com.pnc.jetpackcomposedemos.features.artists.domain.Artist
 import com.pnc.jetpackcomposedemos.features.artists.presentation.viewmodels.ArtistDetailsViewModel
 import com.pnc.jetpackcomposedemos.ui.theme.JetpackComposeDemosTheme
+import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 
 @Composable
 fun ArtistDetails(
@@ -50,28 +52,31 @@ fun ArtistDetails(
         is LoadableState.Success -> {
             val artist = (state as LoadableState.Success<Artist>).data
 
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color.LightGray)
-                    .padding(16.dp)
+            Surface(
+                shape = RoundedCornerShape(12.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant,
             ) {
-                Text(
-                    artist.name,
-                    style = MaterialTheme.typography.headlineMedium
-                )
-                Text(
-                    artist.genre,
-                    color = Color.Gray
-                )
-                Text(artist.location)
-                AsyncImage(
-                    model = "https://kazoopromotions.com${artist.imageUrl}",
-                    contentDescription = "picture of ${artist.name}",
-                    modifier = Modifier.size(250.dp)
-                )
-                Text(artist.description)
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(LocalSpacing.current.large),
+                    modifier = Modifier.padding(LocalSpacing.current.large)
+                ) {
+                    Text(
+                        artist.name,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                    Text(
+                        artist.genre,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(artist.location)
+                    AsyncImage(
+                        model = "https://kazoopromotions.com${artist.imageUrl}",
+                        contentDescription = stringResource(R.string.artist_picture, artist.name),
+                        modifier = Modifier.size(250.dp)
+                            .artistImageSharedElement(artist.id)
+                    )
+                    Text(artist.description)
+                }
             }
         }
         is LoadableState.Error -> {
@@ -86,23 +91,4 @@ fun ArtistDetails(
 
 }
 
-//@Preview(showBackground = false)
-//@Composable
-//fun ArtistDetailsPreview() {
-//    val artist = Artist(
-//        id = 100,
-//        name = "High Voltage",
-//        genre = "Rock",
-//        location = "Los Angeles, CA",
-//        imageUrl = "/images/highvoltage.jpg",
-//        description = "This all-female classic rock/heavy metal band will get you up and moving.",
-//        tags = "Heavy Rock,Party,Loud",
-//    )
-//
-//    JetpackComposeDemosTheme {
-//        ArtistDetails(
-//            artist = artist
-//        )
-//    }
-//}
 

@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.pnc.jetpackcomposedemos.core.ArtistDetailsRoute
 import com.pnc.jetpackcomposedemos.core.ArtistListRoute
 import com.pnc.jetpackcomposedemos.core.BoardMemberDetailsRoute
 import com.pnc.jetpackcomposedemos.core.BoardMemberListRoute
@@ -16,7 +15,6 @@ import com.pnc.jetpackcomposedemos.core.OrdersRoute
 import com.pnc.jetpackcomposedemos.core.SettingsRoute
 import com.pnc.jetpackcomposedemos.core.ToDosRoute
 import com.pnc.jetpackcomposedemos.core.settings.SettingsScreen
-import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.ArtistDetails
 import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.ArtistDirectoryRoute
 import com.pnc.jetpackcomposedemos.features.boardmembers.domain.BoardMember
 import com.pnc.jetpackcomposedemos.features.boardmembers.presentation.BoardMemberDetails
@@ -61,13 +59,9 @@ fun AppNavHost(
             // load the artists from repository or service class
 
             ArtistDirectoryRoute(
-                onArtistSelected = { artistId ->
-                    navController.navigate(ArtistDetailsRoute(artistId))
-                },
                 onBack = {
-                    navController.popBackStack()
-                },
-                useTwoPaneLayout = useTwoPaneLayout
+                navController.popBackStack()
+                }
             )
         }
 
@@ -81,14 +75,6 @@ fun AppNavHost(
                     navController.popBackStack()
                 }
             )
-        }
-
-        composable<ArtistDetailsRoute> { backStackEntry ->
-            val route = backStackEntry.toRoute<ArtistDetailsRoute>()
-            val artistId = route.artistId
-
-            ArtistDetails(artistId = artistId)
-
         }
 
         composable<BoardMemberDetailsRoute> { backStackEntry ->
