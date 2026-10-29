@@ -15,6 +15,13 @@
     <string name="dashboard_view_todos">Ver tareas</string>
     <string name="dashboard_sign_out">Cerrar sesión</string>
 
+    <!-- Navigation -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_artists">Artistas</string>
+    <string name="nav_todos">Tareas</string>
+    <string name="nav_orders">Pedidos</string>
+    <string name="nav_settings">Ajustes</string>
+
     <!-- Settings -->
     <string name="dashboard_settings">Ajustes</string>
     <string name="settings_title">Ajustes</string>

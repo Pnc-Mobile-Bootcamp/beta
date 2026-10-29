@@ -9,23 +9,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pnc.jetpackcomposedemos.core.EventPlannerApp
+import com.pnc.jetpackcomposedemos.core.structure.EventPlannerApp
 import com.pnc.jetpackcomposedemos.core.settings.LocalAppSettings
 import com.pnc.jetpackcomposedemos.core.settings.SettingsViewModel
 import com.pnc.jetpackcomposedemos.core.settings.ThemeMode
-import com.pnc.jetpackcomposedemos.features.auth.data.oidc.AuthorizeUrl
 import com.pnc.jetpackcomposedemos.features.auth.data.oidc.OidcRedirects
-import com.pnc.jetpackcomposedemos.features.auth.data.oidc.Pkce
 import com.pnc.jetpackcomposedemos.ui.theme.KazooTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -92,18 +87,8 @@ class MainActivity : ComponentActivity() {
 
             CompositionLocalProvider(LocalAppSettings provides settings) {
                 KazooTheme(darkTheme = darkTheme) {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-                        val modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                            .padding(horizontal = 16.dp)
-
-                        Box(
-                            modifier = modifier
-                        ) {
-                            EventPlannerApp()
-                        }
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        EventPlannerApp()
                     }
                 }
             }
