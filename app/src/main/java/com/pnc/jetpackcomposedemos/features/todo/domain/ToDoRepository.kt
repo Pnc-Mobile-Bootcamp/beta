@@ -6,6 +6,8 @@ interface ToDoRepository {
     suspend fun getToDo(id: Int): ToDo?
     suspend fun insert(todo: ToDo)
     suspend fun update(todo: ToDo)
+    suspend fun delete(todo: ToDo)
+    suspend fun reorder(orderedIds: List<Int>)
 
 }
 

@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pnc.jetpackcomposedemos.core.LoadableState
 import com.pnc.jetpackcomposedemos.features.todo.domain.CreateToDoUseCase
+import com.pnc.jetpackcomposedemos.features.todo.domain.DeleteToDoUseCase
 import com.pnc.jetpackcomposedemos.features.todo.domain.GetToDosUseCase
+import com.pnc.jetpackcomposedemos.features.todo.domain.ReorderToDosUseCase
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
 import com.pnc.jetpackcomposedemos.features.todo.domain.UpdateToDoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +20,9 @@ import javax.inject.Inject
 class ToDosViewModel @Inject constructor(
     private val getToDos: GetToDosUseCase,
     private val createToDo: CreateToDoUseCase,
-    private val updateToDo: UpdateToDoUseCase
+    private val updateToDo: UpdateToDoUseCase,
+    private val deleteToDoUseCase: DeleteToDoUseCase,
+    private val reorderToDosUseCase: ReorderToDosUseCase
 ): ViewModel() {
 
     private val _uiState: MutableStateFlow<LoadableState<List<ToDo>>> =
@@ -46,6 +50,28 @@ class ToDosViewModel @Inject constructor(
             updateToDo(toDo.copy(completed = !toDo.completed))
             loadToDos()
         }
+    }
+
+    fun deleteToDo(toDo: ToDo) {
+        viewModelScope.launch {
+                deleteToDoUseCase(toDo)
+                loadToDos()
+            }
+    }
+
+    /** Undo for a delete: the same id and position go back in, so the item returns to where it was. */
+    fun restoreToDo(toDo: ToDo) {
+        viewModelScope.launch {
+                createToDo(toDo)
+                loadToDos()
+            }
+    }
+
+    fun reorder(orderedIds: List<Int>) {
+        viewModelScope.launch {
+                reorderToDosUseCase(orderedIds)
+                loadToDos()
+            }
     }
 
 }

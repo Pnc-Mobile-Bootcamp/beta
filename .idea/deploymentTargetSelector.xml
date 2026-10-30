@@ -37,7 +37,7 @@
       </SelectionState>
       <SelectionState runConfigName="Tests in 'com.pnc.jetpackcomposedemos'">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-09-30T12:51:15.522592100Z">
+        <DropdownSelection timestamp="2026-10-29T21:53:28.949708300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\DrewFierst\.android\avd\Pixel_10_Pro_Fold.avd" />

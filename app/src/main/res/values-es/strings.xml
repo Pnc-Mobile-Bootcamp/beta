@@ -62,6 +62,9 @@
     <string name="todo_empty">No hay tareas</string>
     <string name="todo_completed">Completada</string>
     <string name="todo_not_completed">No completada</string>
+    <string name="todo_deleted">Tarea eliminada</string>
+    <string name="todo_undo">Deshacer</string>
+    <string name="todo_delete">Eliminar</string>
 
     <!-- Orders -->
     <string name="orders_empty">No se encontraron pedidos</string>

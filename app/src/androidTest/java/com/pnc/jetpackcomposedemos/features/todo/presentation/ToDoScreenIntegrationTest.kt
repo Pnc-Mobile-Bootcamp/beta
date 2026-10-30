@@ -26,6 +26,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.test.center
+import androidx.compose.ui.test.down
+import androidx.compose.ui.test.moveBy
+import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.test.up
+import androidx.compose.ui.unit.dp
 
 
 @HiltAndroidTest
@@ -141,6 +148,48 @@ class ToDoScreenIntegrationTest {
 
         waitForText("Real item")
         assertEquals(listOf("Real item"), savedToDos().map { it.title })
+    }
+
+
+    @Test
+    fun givenThreeToDos_whenTheFirstIsLongPressedAndDraggedDown_thenTheNewOrderIsSaved() {
+        seed("Alpha", "Beta", "Gamma")
+        showScreen()
+        waitForText("Alpha")
+
+        val alpha = composeRule.onNodeWithText("Alpha", useUnmergedTree = true)
+
+        // The long press is measured on Compose's own clock, so press, let that clock run, THEN move.
+        alpha.performTouchInput { down(center) }
+        composeRule.mainClock.advanceTimeBy(800)
+        alpha.performTouchInput {
+           val step = 26.dp.toPx()
+           moveBy(Offset(0f, step))
+           moveBy(Offset(0f, step))
+           moveBy(Offset(0f, step))                // 78dp: past the middle of the second row, short of the third
+           up()
+       }
+
+        composeRule.waitForIdle()
+        Thread.sleep(1500)
+        assertEquals(listOf("Beta", "Alpha", "Gamma"), savedToDos().map { it.title })
+    }
+
+    @Test
+    fun givenSavedToDo_whenSwipedAway_thenItIsDeletedAndUndoBringsItBack() {
+        seed("Buy milk")
+        showScreen()
+        waitForText("Buy milk")
+
+        composeRule.onNodeWithText("Buy milk", useUnmergedTree = true)
+            .performTouchInput { swipeLeft() }
+
+        composeRule.waitUntil(timeoutMillis = 5_000) { savedToDos().isEmpty() }
+        composeRule.onNodeWithText("Undo").performClick()
+
+        composeRule.waitUntil(timeoutMillis = 5_000) { savedToDos().map { it.title } == listOf("Buy milk") }
+        waitForText("Buy milk")
+        composeRule.onNodeWithText("Buy milk", useUnmergedTree = true).assertIsDisplayed()
     }
 
 

@@ -21,11 +21,21 @@ class DefaultToDoRepository @Inject constructor(
     }
 
     override suspend fun insert(todo: ToDo) {
-        toDoDao.insertToDo(ToDoMapper.toEntity(todo))
+        // A new to-do (position 0) goes to the end of the list. A restored one keeps the position it had.
+        val position = if (todo.position == 0) toDoDao.maxPosition() + 1 else todo.position
+        toDoDao.insertToDo(ToDoMapper.toEntity(todo.copy(position = position)))
     }
 
     override suspend fun update(todo: ToDo) {
         toDoDao.updateToDo(ToDoMapper.toEntity(todo))
+    }
+
+    override suspend fun delete(todo: ToDo) {
+        toDoDao.deleteToDo(todo.id)
+    }
+
+    override suspend fun reorder(orderedIds: List<Int>) {
+        toDoDao.updatePositions(orderedIds)
     }
 
 }
