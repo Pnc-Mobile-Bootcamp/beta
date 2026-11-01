@@ -31,6 +31,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.pnc.jetpackcomposedemos.R
+import com.pnc.jetpackcomposedemos.features.orders.domain.totalsByMonth
 import retrofit2.HttpException
 
 @Composable
@@ -107,6 +108,13 @@ fun PagedOrdersScreen(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
+                        item {
+                            val totals = remember(orders.itemCount) {
+                                orders.itemSnapshotList.items.totalsByMonth()
+                            }
+                            OrdersChartCard(totals = totals)
+                        }
+
                         items(
                             count = orders.itemCount,
                             key = orders.itemKey { order -> order.id }

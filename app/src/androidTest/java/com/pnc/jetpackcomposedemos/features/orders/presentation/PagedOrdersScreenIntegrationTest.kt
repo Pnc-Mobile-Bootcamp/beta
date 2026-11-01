@@ -25,6 +25,10 @@ import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.test.click
+import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.performTouchInput
 
 @HiltAndroidTest
 class PagedOrdersScreenIntegrationTest {
@@ -65,6 +69,24 @@ class PagedOrdersScreenIntegrationTest {
     private fun httpError(code: Int) = HttpException(
         Response.error<Any>(code, "".toResponseBody("application/json".toMediaType()))
     )
+
+    @Test
+    fun givenOrdersInTwoMonths_whenABarIsTapped_thenItsMonthAndTotalAreShown() {
+        ordersApi.response = aMyOrdersResponse(
+            11000,
+            aMyOrder(orderNumber = 1001, orderDate = "2026-01-15T00:00:00", lines = listOf(aMyOrderLine(quantity = 1, unitPrice = 100.0))),
+            aMyOrder(orderNumber = 1002, orderDate = "2026-03-15T00:00:00", lines = listOf(aMyOrderLine(quantity = 1, unitPrice = 300.0)))
+            )
+            signInAs()
+            showScreen()
+            waitForText("Order totals by month")
+
+            // Two bars share the chart's width, so a tap in the left quarter lands on the first one (January).
+            composeRule.onNode(hasContentDescription("Bar chart", substring = true))
+                .performTouchInput { click(Offset(width * 0.25f, height * 0.5f)) }
+
+            waitForText("January 2026: $100.00")
+        }
 
     @Test
     fun givenSignedInCustomerWithOrders_whenScreenOpens_thenTheOrdersAreListed() {

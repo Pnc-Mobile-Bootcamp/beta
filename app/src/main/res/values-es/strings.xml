@@ -83,4 +83,7 @@
     <string name="orders_error_forbidden">No tienes permiso para ver estos pedidos.</string>
     <string name="orders_error_server">El servidor devolvió un error (%1$d).</string>
     <string name="orders_error_unknown">Error desconocido</string>
+    <string name="orders_chart_title">Total de pedidos por mes</string>
+    <string name="orders_chart_selected">%1$s: %2$s</string>
+    <string name="orders_chart_summary">Gráfico de barras con los totales de pedidos de los últimos %1$d meses. Toca una barra para ver su total.</string>
 </resources>

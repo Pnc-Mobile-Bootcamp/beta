@@ -83,4 +83,7 @@
     <string name="orders_error_forbidden">You are not allowed to see these orders.</string>
     <string name="orders_error_server">The server returned an error (%1$d).</string>
     <string name="orders_error_unknown">Unknown error</string>
+    <string name="orders_chart_title">Order totals by month</string>
+    <string name="orders_chart_selected">%1$s: %2$s</string>
+    <string name="orders_chart_summary">Bar chart of order totals for the last %1$d months. Tap a bar to see its total.</string>
 </resources>
