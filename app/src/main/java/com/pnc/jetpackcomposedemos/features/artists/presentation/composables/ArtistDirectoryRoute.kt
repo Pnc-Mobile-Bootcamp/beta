@@ -58,6 +58,9 @@ fun ArtistDirectoryRoute(
                                         )
                                     }
                                 },
+                                onRefresh = viewModel::loadArtists,
+                                onDismissError = viewModel::dismissError,
+                                onSearchQueryChange = viewModel::updateSearchQuery,
                                 onGenreChange = {
                                     viewModel.updateGenreFilter(it)
                                 },

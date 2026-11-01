@@ -27,6 +27,7 @@ class ArtistDirectoryViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(
         ArtistDirectoryState(
             // restored after the system kills and recreates the process
+            searchQuery = savedStateHandle[SEARCH_KEY] ?: "",
             genreFilter = savedStateHandle[GENRE_KEY] ?: "",
             locationFilter = savedStateHandle[LOCATION_KEY] ?: ""
         )
@@ -110,6 +111,11 @@ class ArtistDirectoryViewModel @Inject constructor(
         }
     }
 
+    fun updateSearchQuery(query: String) {
+        savedStateHandle[SEARCH_KEY] = query
+        _uiState.update { it.copy(searchQuery = query) }
+    }
+
     fun updateLocationFilter(location: String) {
         savedStateHandle[LOCATION_KEY] = location
         _uiState.update { currentState ->
@@ -136,6 +142,7 @@ class ArtistDirectoryViewModel @Inject constructor(
     }
 
     private companion object {
+        const val SEARCH_KEY = "searchQuery"
         const val GENRE_KEY = "genreFilter"
         const val LOCATION_KEY = "locationFilter"
     }

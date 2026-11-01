@@ -55,6 +55,8 @@
     <string name="artist_location">Location: %1$s</string>
     <string name="artist_not_found">Artist not found</string>
     <string name="artist_picture">picture of %1$s</string>
+    <string name="artists_search_hint">Search artists</string>
+    <string name="artists_retry">Retry</string>
 
     <!-- To-dos -->
     <string name="todo_add_item">Add a new to-do item</string>
