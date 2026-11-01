@@ -6,6 +6,7 @@
     <string name="common_close">Cerrar</string>
     <string name="common_error">Error: %1$s</string>
     <string name="common_welcome">Bienvenido, %1$s</string>
+    <string name="common_retry">Reintentar</string>
 
     <!-- Dashboard -->
     <string name="dashboard_title">Operaciones de planificación de eventos</string>
@@ -78,4 +79,8 @@
     <string name="order_col_qty">Cant.</string>
     <string name="order_col_unit_price">$/unidad</string>
     <string name="order_col_total">Total</string>
+    <string name="orders_error_expired">Tu sesión ha caducado. Inicia sesión de nuevo.</string>
+    <string name="orders_error_forbidden">No tienes permiso para ver estos pedidos.</string>
+    <string name="orders_error_server">El servidor devolvió un error (%1$d).</string>
+    <string name="orders_error_unknown">Error desconocido</string>
 </resources>

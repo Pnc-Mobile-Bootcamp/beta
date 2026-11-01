@@ -7,6 +7,7 @@
     <string name="common_close">Close</string>
     <string name="common_error">Error: %1$s</string>
     <string name="common_welcome">Welcome, %1$s</string>
+    <string name="common_retry">Retry</string>
 
     <!-- Dashboard -->
     <string name="dashboard_title">Event Planning Operations</string>
@@ -78,4 +79,8 @@
     <string name="order_col_qty">Qty</string>
     <string name="order_col_unit_price">$/per</string>
     <string name="order_col_total">Total</string>
+    <string name="orders_error_expired">Your session has expired. Please sign in again.</string>
+    <string name="orders_error_forbidden">You are not allowed to see these orders.</string>
+    <string name="orders_error_server">The server returned an error (%1$d).</string>
+    <string name="orders_error_unknown">Unknown error</string>
 </resources>

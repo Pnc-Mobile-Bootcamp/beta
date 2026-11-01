@@ -37,6 +37,10 @@ class SignInViewModel @Inject constructor(
         _uiState.value = SignInUiState.InBrowser
         return oidc.beginSignIn().toString()
     }
+
+    fun reset() {
+        _uiState.value = SignInUiState.Idle
+    }
 }
 
 

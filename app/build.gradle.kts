@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.play.services.cast.framework)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -123,6 +124,8 @@ dependencies {
     implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
     implementation(libs.androidx.compose.material3.adaptive.layout)
     implementation(libs.androidx.compose.material3.adaptive.navigation)
+    implementation(libs.androidx.paging.compose)
+    testImplementation(libs.androidx.paging.testing)
 }
 
 configurations.configureEach {

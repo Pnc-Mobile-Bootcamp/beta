@@ -34,13 +34,13 @@ fun EventPlanningDashboard(
             modifier = Modifier.testTag("dashboard-title")
         )
 
-        Button(
-            onClick = onViewArtists,
-            modifier = Modifier.fillMaxWidth()
-                .testTag("view-artists-button")
-        ) {
-            Text(stringResource(R.string.dashboard_view_artists))
-        }
+//        Button(
+//            onClick = onViewArtists,
+//            modifier = Modifier.fillMaxWidth()
+//                .testTag("view-artists-button")
+//        ) {
+//            Text(stringResource(R.string.dashboard_view_artists))
+//        }
 
         Button(
             onClick = onViewBoardMembers,
@@ -50,29 +50,29 @@ fun EventPlanningDashboard(
             Text(stringResource(R.string.dashboard_view_board_members))
         }
 
-        Button(
-            onClick = onViewOrders,
-            modifier = Modifier.fillMaxWidth()
-                .testTag("view-order-button")
-        ) {
-            Text(stringResource(R.string.dashboard_view_orders))
-        }
+//        Button(
+//            onClick = onViewOrders,
+//            modifier = Modifier.fillMaxWidth()
+//                .testTag("view-order-button")
+//        ) {
+//            Text(stringResource(R.string.dashboard_view_orders))
+//        }
 
-        Button(
-            onClick = onViewToDos,
-            modifier = Modifier.fillMaxWidth()
-                .testTag("view-todo-button")
-        ) {
-            Text(stringResource(R.string.dashboard_view_todos))
-        }
+//        Button(
+//            onClick = onViewToDos,
+//            modifier = Modifier.fillMaxWidth()
+//                .testTag("view-todo-button")
+//        ) {
+//            Text(stringResource(R.string.dashboard_view_todos))
+//        }
 
-        Button(
-            onClick = onSettings,
-            modifier = Modifier.fillMaxWidth()
-                .testTag("settings-button")
-        ) {
-            Text(stringResource(R.string.dashboard_settings))
-        }
+//        Button(
+//            onClick = onSettings,
+//            modifier = Modifier.fillMaxWidth()
+//                .testTag("settings-button")
+//        ) {
+//            Text(stringResource(R.string.dashboard_settings))
+//        }
 
         Button(
             onClick = onSignOut,
