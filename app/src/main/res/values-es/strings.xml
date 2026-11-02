@@ -32,6 +32,20 @@
     <string name="settings_theme_dark">Oscuro</string>
     <string name="settings_show_location">Mostrar la ubicación en las tarjetas de artistas</string>
 
+    <!-- Notifications -->
+    <string name="settings_notifications">Notificaciones</string>
+    <string name="settings_notify_new_artists">Avisarme cuando haya artistas nuevos</string>
+    <string name="settings_notifications_blocked">Las notificaciones están bloqueadas para esta aplicación. Actívalas en los ajustes del sistema para recibir avisos.</string>
+    <string name="settings_open_system_settings">Abrir ajustes del sistema</string>
+    <string name="settings_sync_now">Buscar artistas nuevos ahora</string>
+    <string name="notification_channel_name">Artistas nuevos</string>
+    <string name="notification_new_artists_title">Hay artistas nuevos</string>
+    <plurals name="notification_new_artists_text">
+        <item quantity="one">Se ha unido %d artista nuevo.</item>
+        <item quantity="many">Se han unido %d de artistas nuevos.</item>
+        <item quantity="other">Se han unido %d artistas nuevos.</item>
+    </plurals>
+
     <!-- Sign in -->
     <string name="sign_in_button">Iniciar sesión</string>
     <string name="sign_in_waiting">Esperando al navegador...</string>

@@ -56,6 +56,18 @@ class DataStoreSettingsRepositoryTest {
             repository.settings.first()
         )
     }
+
+    @Test
+    fun `notifications are off until the user turns them on`() = runTest {
+        val repository = createRepository()
+
+        assertEquals(false, repository.settings.first().notifyNewArtists)
+
+        repository.setNotifyNewArtists(true)
+
+        assertEquals(true, repository.settings.first().notifyNewArtists)
+    }
+
 }
 
 

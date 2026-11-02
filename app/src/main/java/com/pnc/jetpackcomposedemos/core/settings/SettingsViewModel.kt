@@ -3,6 +3,7 @@ package com.pnc.jetpackcomposedemos.core.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pnc.jetpackcomposedemos.core.sync.ArtistSyncScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val repository: SettingsRepository
+    private val repository: SettingsRepository,
+    private val syncScheduler: ArtistSyncScheduler
 ) : ViewModel() {
 
     // Turns the cold DataStore Flow into state the UI can read. The defaults show until the file is read.
@@ -29,6 +31,15 @@ class SettingsViewModel @Inject constructor(
     fun setShowArtistLocation(show: Boolean) {
         viewModelScope.launch { repository.setShowArtistLocation(show) }
     }
+
+    /** Remembers the choice AND starts or stops the hourly sync that sends the notifications. */
+    fun setNotifyNewArtists(enabled: Boolean) {
+        viewModelScope.launch { repository.setNotifyNewArtists(enabled) }
+        if (enabled) syncScheduler.schedule() else syncScheduler.cancel()
+    }
+
+    fun syncNow() = syncScheduler.syncNow()
+
 }
 
 

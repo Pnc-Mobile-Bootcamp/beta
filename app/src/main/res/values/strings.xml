@@ -33,6 +33,19 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_show_location">Show location on artist cards</string>
 
+    <!-- Notifications -->
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notify_new_artists">Tell me when new artists are available</string>
+    <string name="settings_notifications_blocked">Notifications are blocked for this app. Turn them on in the system settings to get alerts.</string>
+    <string name="settings_open_system_settings">Open system settings</string>
+    <string name="settings_sync_now">Check for new artists now</string>
+    <string name="notification_channel_name">New artists</string>
+    <string name="notification_new_artists_title">New artists available</string>
+    <plurals name="notification_new_artists_text">
+        <item quantity="one">%d new artist has joined.</item>
+        <item quantity="other">%d new artists have joined.</item>
+    </plurals>
+
     <!-- Sign in -->
     <string name="sign_in_button">Sign in</string>
     <string name="sign_in_waiting">Waiting for the browser...</string>

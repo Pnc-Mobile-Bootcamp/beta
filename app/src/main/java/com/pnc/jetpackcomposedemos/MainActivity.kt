@@ -15,7 +15,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.work.Configuration
 import com.pnc.jetpackcomposedemos.core.structure.EventPlannerApp
 import com.pnc.jetpackcomposedemos.core.settings.LocalAppSettings
 import com.pnc.jetpackcomposedemos.core.settings.SettingsViewModel
@@ -27,7 +29,16 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @HiltAndroidApp
-class EventPlannerApplication: Application()
+class EventPlannerApplication: Application(), Configuration.Provider {
+    // Hilt's worker factory lets a worker's constructor ask for repositories, just like a ViewModel does.
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override val workManagerConfiguration: Configuration
+    get() = Configuration.Builder()
+        .setWorkerFactory(workerFactory)
+        .build()
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
