@@ -32,11 +32,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.common.api.GoogleApi
+import com.pnc.jetpackcomposedemos.BuildConfig
 import com.pnc.jetpackcomposedemos.R
 import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 
@@ -50,7 +52,9 @@ fun SettingsScreen(
         onThemeModeChange = viewModel::setThemeMode,
         onShowArtistLocationChange = viewModel::setShowArtistLocation,
         onNotifyNewArtistsChange = viewModel::setNotifyNewArtists,
-        onSyncNow = viewModel::syncNow
+        onSyncNow = viewModel::syncNow,
+        onRecordTestError = viewModel::recordTestError,
+        latestReport = viewModel::latestReport
     )
 }
 
@@ -60,7 +64,9 @@ fun SettingsContent(
     onThemeModeChange: (ThemeMode) -> Unit,
     onShowArtistLocationChange: (Boolean) -> Unit,
     onNotifyNewArtistsChange: (Boolean) -> Unit = {},
-    onSyncNow: () -> Unit = {}
+    onSyncNow: () -> Unit = {},
+    onRecordTestError: () -> Unit = {},
+    latestReport: () -> String? = { null }
 ) {
     val context = LocalContext.current
 
@@ -141,50 +147,79 @@ fun SettingsContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-        Text(
-            text = stringResource(R.string.settings_notify_new_artists),
-            modifier = Modifier.weight(1f)
-        )
-        Switch(
-            checked = settings.notifyNewArtists,
-            onCheckedChange = { wanted ->
-                when {
-                    !wanted -> {
-                        permissionDenied = false
-                        onNotifyNewArtistsChange(false)
-                    }
-                    hasNotificationPermission(context) -> onNotifyNewArtistsChange(true)
+            Text(
+                text = stringResource(R.string.settings_notify_new_artists),
+                modifier = Modifier.weight(1f)
+            )
+            Switch(
+                checked = settings.notifyNewArtists,
+                onCheckedChange = { wanted ->
+                    when {
+                        !wanted -> {
+                            permissionDenied = false
+                            onNotifyNewArtistsChange(false)
+                        }
+
+                        hasNotificationPermission(context) -> onNotifyNewArtistsChange(true)
                         // Android 13+ and not yet allowed: ask. The answer arrives in the launcher above.
-                    else -> permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        else -> permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                }
+            )
+        }
+
+        if (permissionDenied) {
+            Text(
+                text = stringResource(R.string.settings_notifications_blocked),
+                color = MaterialTheme.colorScheme.error
+            )
+            OutlinedButton(onClick = { openNotificationSettings(context) }) {
+                Text(stringResource(R.string.settings_open_system_settings))
+            }
+        }
+
+        if (settings.notifyNewArtists) {
+            OutlinedButton(onClick = onSyncNow) {
+                Text(stringResource(R.string.settings_sync_now))
+            }
+        }
+        // Only in debug builds: this panel is for learning, and release users should never see it.
+        if (BuildConfig.DEBUG) {
+            var report by remember { mutableStateOf<String?>(null) }
+
+            Text(
+                text = stringResource(R.string.settings_diagnostics),
+                style = MaterialTheme.typography.titleLarge
+            )
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = {
+                    onRecordTestError()
+                    report = latestReport()
+                }) {
+                    Text(stringResource(R.string.settings_log_test_error))
+                }
+                OutlinedButton(onClick = { report = latestReport() }) {
+                    Text(stringResource(R.string.settings_show_report))
                 }
             }
-        )
-    }
-
-    if (permissionDenied) {
-        Text(
-            text = stringResource(R.string.settings_notifications_blocked),
-            color = MaterialTheme.colorScheme.error
-        )
-        OutlinedButton(onClick = { openNotificationSettings(context) }) {
-            Text(stringResource(R.string.settings_open_system_settings))
+            report?.let { text ->
+                Text(
+                    text = text,
+                    style = MaterialTheme.typography.bodySmall,
+                    fontFamily = FontFamily.Monospace
+                )
+            }
         }
-    }
-
-    if (settings.notifyNewArtists) {
-        OutlinedButton(onClick = onSyncNow) {
-            Text(stringResource(R.string.settings_sync_now))
-        }
-    }
 
 
     }
 }
+
 /** Before Android 13 there is no runtime permission: notifications are allowed unless the user blocked them. */
 private fun hasNotificationPermission(context: Context): Boolean =
     Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
-        PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
+            PackageManager.PERMISSION_GRANTED
 
 private fun openNotificationSettings(context: Context) {
     val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)

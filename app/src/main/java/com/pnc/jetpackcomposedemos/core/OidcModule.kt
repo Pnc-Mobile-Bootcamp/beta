@@ -1,6 +1,7 @@
 package com.pnc.jetpackcomposedemos.core
 
 import com.pnc.jetpackcomposedemos.BuildConfig
+import com.pnc.jetpackcomposedemos.core.observability.HttpLogging
 import com.pnc.jetpackcomposedemos.features.auth.data.oidc.AuthApi
 import dagger.Module
 import dagger.Provides
@@ -29,9 +30,7 @@ object OidcModule {
             .apply {
                 if (BuildConfig.DEBUG) {
                     // BASIC, not BODY: the BODY level would print access and refresh tokens to Logcat.
-                    addInterceptor(HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BASIC
-                    })
+                    addInterceptor(HttpLogging.interceptor(HttpLoggingInterceptor.Level.BASIC))
                 }
             }
             .build()

@@ -9,6 +9,7 @@ import com.pnc.jetpackcomposedemos.features.artists.domain.SyncArtistsUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
+import timber.log.Timber
 import java.io.IOException
 
 @HiltWorker
@@ -31,8 +32,10 @@ class ArtistSyncWorker @AssistedInject constructor(
             throw e
         } catch (e: IOException) {
             // No network or the server was unreachable: let WorkManager try again later with backoff.
+            Timber.w(e, "Artist sync could not reach the server; will retry")
             Result.retry()
         } catch (e: Exception) {
+            Timber.e(e, "Artist sync failed")
             Result.failure()
         }
     }

@@ -3,18 +3,21 @@ package com.pnc.jetpackcomposedemos.core.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pnc.jetpackcomposedemos.core.observability.CrashReporter
 import com.pnc.jetpackcomposedemos.core.sync.ArtistSyncScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val repository: SettingsRepository,
-    private val syncScheduler: ArtistSyncScheduler
+    private val syncScheduler: ArtistSyncScheduler,
+    private val crashReporter: CrashReporter
 ) : ViewModel() {
 
     // Turns the cold DataStore Flow into state the UI can read. The defaults show until the file is read.
@@ -39,6 +42,13 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun syncNow() = syncScheduler.syncNow()
+
+    // Debug diagnostics (see SettingsScreen): they exist so students can watch the reporting work.
+    fun latestReport(): String? = crashReporter.latestReport()
+
+    fun recordTestError() {
+        Timber.e(IllegalStateException("Test error, token=abc123 for someone@example.com"), "Handled test error")
+    }
 
 }
 

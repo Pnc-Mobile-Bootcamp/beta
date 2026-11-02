@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.pnc.jetpackcomposedemos.features.auth.domain.SessionManager
 import com.pnc.jetpackcomposedemos.features.orders.domain.Order
+import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
@@ -35,6 +36,7 @@ class OrdersPagingSource(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
+            Timber.w(e, "Loading page %d of orders failed", page)
             // Returning the error (instead of throwing) lets the UI show it and call retry().
             LoadResult.Error(e)
         }

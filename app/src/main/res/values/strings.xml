@@ -99,4 +99,10 @@
     <string name="orders_chart_title">Order totals by month</string>
     <string name="orders_chart_selected">%1$s: %2$s</string>
     <string name="orders_chart_summary">Bar chart of order totals for the last %1$d months. Tap a bar to see its total.</string>
+
+    <!-- Diagnostics (debug builds) -->
+    <string name="settings_diagnostics">Diagnostics</string>
+    <string name="settings_log_test_error">Log a test error</string>
+    <string name="settings_show_report">Show latest report</string>
+
 </resources>

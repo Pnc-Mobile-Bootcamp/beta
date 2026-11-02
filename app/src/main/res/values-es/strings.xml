@@ -100,4 +100,10 @@
     <string name="orders_chart_title">Total de pedidos por mes</string>
     <string name="orders_chart_selected">%1$s: %2$s</string>
     <string name="orders_chart_summary">Gráfico de barras con los totales de pedidos de los últimos %1$d meses. Toca una barra para ver su total.</string>
+
+    <!-- Diagnostics (debug builds) -->
+    <string name="settings_diagnostics">Diagnóstico</string>
+    <string name="settings_log_test_error">Registrar un error de prueba</string>
+    <string name="settings_show_report">Mostrar el último informe</string>
+
 </resources>

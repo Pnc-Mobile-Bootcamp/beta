@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
+import timber.log.Timber
 
 @HiltViewModel
 class ArtistDirectoryViewModel @Inject constructor(
@@ -78,6 +79,7 @@ class ArtistDirectoryViewModel @Inject constructor(
                 throw e
             }
             catch (e: Exception) {
+                Timber.w(e, "Refreshing the artists failed")
                 // cached artists already on screen, they can stay there
                 // we just need to surface the error
                 _uiState.update {

@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.work.Configuration
+import com.pnc.jetpackcomposedemos.core.observability.CrashReporter
+import com.pnc.jetpackcomposedemos.core.observability.CrashReportingTree
 import com.pnc.jetpackcomposedemos.core.structure.EventPlannerApp
 import com.pnc.jetpackcomposedemos.core.settings.LocalAppSettings
 import com.pnc.jetpackcomposedemos.core.settings.SettingsViewModel
@@ -26,6 +28,7 @@ import com.pnc.jetpackcomposedemos.features.auth.data.oidc.OidcRedirects
 import com.pnc.jetpackcomposedemos.ui.theme.KazooTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -34,10 +37,31 @@ class EventPlannerApplication: Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
+    @Inject
+    lateinit var crashReporter: CrashReporter
+
     override val workManagerConfiguration: Configuration
     get() = Configuration.Builder()
         .setWorkerFactory(workerFactory)
         .build()
+
+    override fun onCreate() {
+        super.onCreate()    // Hilt fills the @Inject fields here
+
+        // DebugTree prints to Logcat and is only planted in debug builds. CrashReportingTree is always planted.
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+        Timber.plant(CrashReportingTree(crashReporter))
+
+        // Last resort for an exception nobody caught: write the report, then let Android finish crashing the app.
+        val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            crashReporter.recordFatal(throwable)
+            previousHandler?.uncaughtException(thread, throwable)
+        }
+    }
+
 }
 
 @AndroidEntryPoint

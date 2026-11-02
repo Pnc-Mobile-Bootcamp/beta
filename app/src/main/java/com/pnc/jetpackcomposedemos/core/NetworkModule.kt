@@ -1,6 +1,7 @@
 package com.pnc.jetpackcomposedemos.core
 
 import com.pnc.jetpackcomposedemos.BuildConfig
+import com.pnc.jetpackcomposedemos.core.observability.HttpLogging
 import com.pnc.jetpackcomposedemos.features.artists.data.ArtistDataSource
 import com.pnc.jetpackcomposedemos.features.artists.data.RemoteArtistDataSource
 import com.pnc.jetpackcomposedemos.features.orders.data.MyOrdersDataSource
@@ -40,9 +41,7 @@ object NetworkModule {
             .authenticator(tokenAuthenticator)
             .apply {
                 if (BuildConfig.DEBUG) {
-                    addInterceptor(HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    })
+                    addInterceptor(HttpLogging.interceptor(HttpLoggingInterceptor.Level.BODY))
                 }
             }
             .build()
