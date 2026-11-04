@@ -6,5 +6,6 @@ plugins {
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.devtools.ksp) apply false
     alias(libs.plugins.androidx.room) apply false
+    alias(libs.plugins.android.library) apply false
 }
 

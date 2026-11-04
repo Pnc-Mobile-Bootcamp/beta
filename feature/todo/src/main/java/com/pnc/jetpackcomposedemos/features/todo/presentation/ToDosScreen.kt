@@ -5,12 +5,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pnc.jetpackcomposedemos.R
+import com.pnc.jetpackcomposedemos.feature.todo.R
 import com.pnc.jetpackcomposedemos.core.LoadableState
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
 
@@ -31,7 +30,7 @@ fun ToDosScreen(
         is LoadableState.Error -> {
             val errorMessage = (uiState as LoadableState.Error).message
             Text(
-                stringResource(R.string.common_error, errorMessage),
+                stringResource(R.string.todo_error, errorMessage),
                 color = MaterialTheme.colorScheme.error
             )
         }

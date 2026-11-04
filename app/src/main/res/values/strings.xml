@@ -2,7 +2,6 @@
     <string name="app_name">JetpackComposeDemos</string>
 
     <!-- Common -->
-    <string name="common_add">Add</string>
     <string name="common_clear">Clear</string>
     <string name="common_close">Close</string>
     <string name="common_error">Error: %1$s</string>
@@ -72,15 +71,6 @@
     <string name="artists_search_hint">Search artists</string>
     <string name="artists_retry">Retry</string>
 
-    <!-- To-dos -->
-    <string name="todo_add_item">Add a new to-do item</string>
-    <string name="todo_new_hint">New to-do</string>
-    <string name="todo_empty">No to-dos</string>
-    <string name="todo_completed">Completed</string>
-    <string name="todo_not_completed">Not completed</string>
-    <string name="todo_deleted">To-do deleted</string>
-    <string name="todo_undo">Undo</string>
-    <string name="todo_delete">Delete</string>
 
     <!-- Orders -->
     <string name="orders_empty">No orders found</string>

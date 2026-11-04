@@ -130,6 +130,9 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.timber)
+    implementation(project(":core:common"))
+    implementation(project(":feature:todo"))
+    implementation(project(":core:designsystem"))
 }
 
 configurations.configureEach {

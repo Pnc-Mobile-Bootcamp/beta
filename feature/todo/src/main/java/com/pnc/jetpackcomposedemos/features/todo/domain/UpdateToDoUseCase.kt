@@ -4,13 +4,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CreateToDoUseCase @Inject constructor(
+class UpdateToDoUseCase @Inject constructor(
     private val toDoRepository: ToDoRepository
 ) {
 
-    suspend operator fun invoke(todo: ToDo) {
-        toDoRepository.insert(todo)
+    suspend operator fun invoke(toDo: ToDo) {
+        toDoRepository.update(toDo)
     }
 
 }
-

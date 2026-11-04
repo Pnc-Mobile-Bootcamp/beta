@@ -10,5 +10,3 @@ sealed interface LoadableState<out T> {
         val message: String
     ): LoadableState<Nothing>
 }
-
-

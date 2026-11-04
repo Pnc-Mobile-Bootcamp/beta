@@ -26,7 +26,6 @@ import com.pnc.jetpackcomposedemos.features.artists.presentation.composables.Art
 import com.pnc.jetpackcomposedemos.features.boardmembers.domain.BoardMember
 import com.pnc.jetpackcomposedemos.features.boardmembers.presentation.BoardMemberDetails
 import com.pnc.jetpackcomposedemos.features.boardmembers.presentation.BoardMemberList
-import com.pnc.jetpackcomposedemos.features.orders.presentation.OrdersScreen
 import com.pnc.jetpackcomposedemos.features.orders.presentation.PagedOrdersScreen
 import com.pnc.jetpackcomposedemos.features.todo.presentation.ToDosScreen
 

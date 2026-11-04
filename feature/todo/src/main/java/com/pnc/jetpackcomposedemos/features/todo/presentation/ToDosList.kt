@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -48,7 +45,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.pnc.jetpackcomposedemos.R
+import com.pnc.jetpackcomposedemos.feature.todo.R
 import com.pnc.jetpackcomposedemos.features.todo.domain.ToDo
 import com.pnc.jetpackcomposedemos.ui.theme.LocalSpacing
 import kotlinx.coroutines.launch
@@ -168,7 +165,7 @@ fun ToDosList(
                     },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                 ) {
-                    Text(stringResource(R.string.common_add))
+                    Text(stringResource(R.string.todo_add))
                 }
             }
         }

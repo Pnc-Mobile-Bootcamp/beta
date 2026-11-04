@@ -10,5 +10,3 @@ interface ToDoRepository {
     suspend fun reorder(orderedIds: List<Int>)
 
 }
-
-

@@ -6,5 +6,3 @@ data class ToDo(
     val completed: Boolean,
     val position: Int = 0
 )
-
-

@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
-import androidx.test.espresso.action.ViewActions.doubleClick
 import com.pnc.jetpackcomposedemos.HiltTestActivity
 import com.pnc.jetpackcomposedemos.core.room.AppDatabase
 import com.pnc.jetpackcomposedemos.features.todo.data.ToDoDao
@@ -27,11 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.test.center
-import androidx.compose.ui.test.down
-import androidx.compose.ui.test.moveBy
 import androidx.compose.ui.test.swipeLeft
-import androidx.compose.ui.test.up
 import androidx.compose.ui.unit.dp
 
 

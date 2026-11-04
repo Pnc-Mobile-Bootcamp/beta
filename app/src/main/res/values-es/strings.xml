@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Common -->
-    <string name="common_add">Agregar</string>
     <string name="common_clear">Borrar</string>
     <string name="common_close">Cerrar</string>
     <string name="common_error">Error: %1$s</string>
@@ -72,16 +71,6 @@
     <string name="artist_picture">foto de %1$s</string>
     <string name="artists_search_hint">Buscar artistas</string>
     <string name="artists_retry">Reintentar</string>
-
-    <!-- To-dos -->
-    <string name="todo_add_item">Agregar una tarea nueva</string>
-    <string name="todo_new_hint">Nueva tarea</string>
-    <string name="todo_empty">No hay tareas</string>
-    <string name="todo_completed">Completada</string>
-    <string name="todo_not_completed">No completada</string>
-    <string name="todo_deleted">Tarea eliminada</string>
-    <string name="todo_undo">Deshacer</string>
-    <string name="todo_delete">Eliminar</string>
 
     <!-- Orders -->
     <string name="orders_empty">No se encontraron pedidos</string>

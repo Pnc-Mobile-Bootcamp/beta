@@ -24,4 +24,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "JetpackComposeDemos"
 include(":app")
- 
+include(":core:common")
+include(":feature:todo")
+include(":core:designsystem")
