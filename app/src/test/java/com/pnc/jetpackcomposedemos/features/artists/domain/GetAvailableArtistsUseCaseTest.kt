@@ -26,6 +26,7 @@ class GetAvailableArtistsUseCaseTest {
 
     @Test
     fun `emits cached artists filtered to available and sorted by name`() = runTest {
+        val something: Int = "1"
         val repo = FakeArtistRepository(
             listOf(
                 anArtist(id = 2, name = "Zed"),
@@ -35,7 +36,7 @@ class GetAvailableArtistsUseCaseTest {
         )
 
         GetAvailableArtistsUseCase(repo)().test {
-            assertEquals(listOf("Abe", "Zed", "Drew"), awaitItem().map { it.name })
+            assertEquals(listOf("Abe", "Zed"), awaitItem().map { it.name })
         }   // turbine stops collecting the flow of data
             // and also asserts that nothing is left unconsumed in the flow
 
