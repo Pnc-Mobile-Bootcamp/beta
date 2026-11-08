@@ -30,18 +30,6 @@ pipeline {
             }
         }
 
-        stage('Build debug APK') {
-            steps {
-                bat "${GRADLE} assembleDebug"
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk',
-                    fingerprint: true
-                }
-            }
-        }
-
         stage('Unit tests') {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
@@ -52,6 +40,18 @@ pipeline {
                 always {
                     junit testResults: 'app/build/test-results/testDebugUnitTest/*.xml',
                     allowEmptyResults: false
+                }
+            }
+        }
+
+        stage('Build debug APK') {
+            steps {
+                bat "${GRADLE} assembleDebug"
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk',
+                    fingerprint: true
                 }
             }
         }
