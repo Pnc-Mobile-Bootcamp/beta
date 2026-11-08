@@ -30,6 +30,18 @@ pipeline {
             }
         }
 
+        stage('Android Lint') {
+            steps {
+                bat "${GRADLE} lintDebug"
+            }
+            post {
+                always {
+                    recordIssues enabledForFailure: true,
+                        tools: [androidLintParser(pattern: 'app/build/reports/lint-results-debug.xml')]
+                }
+            }
+        }
+
         stage('Unit tests') {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
