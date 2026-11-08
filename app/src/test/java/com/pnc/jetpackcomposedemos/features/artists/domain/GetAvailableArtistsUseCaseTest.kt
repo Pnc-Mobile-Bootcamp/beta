@@ -35,7 +35,7 @@ class GetAvailableArtistsUseCaseTest {
         )
 
         GetAvailableArtistsUseCase(repo)().test {
-            assertEquals(listOf("Abe", "Zed"), awaitItem().map { it.name })
+            assertEquals(listOf("Abe", "Zed", "Drew"), awaitItem().map { it.name })
         }   // turbine stops collecting the flow of data
             // and also asserts that nothing is left unconsumed in the flow
 
