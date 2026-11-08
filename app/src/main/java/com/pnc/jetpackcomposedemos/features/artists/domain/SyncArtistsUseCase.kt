@@ -12,7 +12,6 @@ class SyncArtistsUseCase @Inject constructor(
      * The first fill of an empty cache reports 0: everything is "new" then, and that is not news.
      */
     suspend operator fun invoke(): Int {
-        val test: Int = "1"
         val before = repository.observeArtists().first().map { it.id }.toSet()
         repository.refreshArtists()
         val after = repository.observeArtists().first()

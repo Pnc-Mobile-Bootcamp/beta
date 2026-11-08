@@ -26,7 +26,6 @@ class GetAvailableArtistsUseCaseTest {
 
     @Test
     fun `emits cached artists filtered to available and sorted by name`() = runTest {
-        val something: Int = "1"
         val repo = FakeArtistRepository(
             listOf(
                 anArtist(id = 2, name = "Zed"),
