@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JetpackComposeDemos</string>
+    <string name="app_name" translatable="false">JetpackComposeDemos</string>
 
     <!-- Common -->
     <string name="common_clear">Clear</string>
