@@ -30,81 +30,59 @@ pipeline {
             }
         }
 
-        stage('Android Lint') {
-            steps {
-                bat "${GRADLE} lintDebug"
-            }
-            post {
-                always {
-                    recordIssues enabledForFailure: true,
-                        tools: [androidLintParser(pattern: 'app/build/reports/lint-results-debug.xml')]
-                    publishHTML(target: [reportDir: 'app/build/reports',
-                        reportFiles: 'lint-results-debug.html',
-                        reportName: 'Lint HTML',
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true,
-                        allowMissing: false
-                    ])
-                }
-            }
-        }
-
-        stage('Static analysis') {
-            steps {
-                bat "${GRADLE} detekt ktlintCheck"
-            }
-            post {
-                always {
-                    recordIssues enabledForFailure: true,
-                        tool: checkStyle(id: 'detekt', name: 'detekt',
-                            pattern: 'app/build/reports/detekt/detekt.xml'),
-                        qualityGates: [[threshold: 1, type: 'NEW', unstable: true]]
-                    recordIssues enabledForFailure: true,
-                        tool: checkStyle(id: 'ktlint', name: 'ktlint',
-                            pattern: 'app/build/reports/ktlint/**/*.xml'),
-                        qualityGates: [[threshold: 1, type: 'NEW', unstable: true]]
-                }
-            }
-        }
-
-        stage('Coverage') {
-            steps {
-                bat "${GRADLE} createDebugUnitTestCoverageReport"
-                bat 'powershell -NoProfile -ExecutionPolicy Bypass -File ci\\coverage-gate.ps1 -Report app/build/reports/coverage/test/debug/report.xml -Min 10'
-            }
-            post {
-                always {
-                    recordCoverage(
-                        tools: [[parser: 'JACOCO', pattern: 'app/build/reports/coverage/test/debug/report.xml']],
-                        sourceCodeRetention: 'NEVER'
-                    )
-                }
-            }
-        }
-
-        stage('Unit tests') {
+        stage('Verify') {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
-                    bat "${GRADLE} testDebugUnitTest"
-                }
-            }
-            post {
-                always {
-                    junit testResults: 'app/build/test-results/testDebugUnitTest/*.xml',
-                    allowEmptyResults: false
+                    bat "${GRADLE} --continue lintDebug detekt ktlintCheck testDebugUnitTest createDebugUnitTestCoverageReport"
                 }
             }
         }
 
-        stage('Build debug APK') {
-            steps {
-                bat "${GRADLE} assembleDebug"
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk',
-                    fingerprint: true
+        stage('Publish reports') {
+            parallel {
+                stage('Tests') {
+                    steps {
+                        junit testResults: 'app/build/test-results/testDebugUnitTest/*.xml',
+                        allowEmptyResults: false
+                    }
                 }
+
+                stage('Lint') {
+                    steps {
+                        recordIssues enabledForFailure: true,
+                            tools: [androidLintParser(pattern: 'app/build/reports/lint-results-debug.xml')]
+                    }
+                }
+                stage('detekt and ktlint') {
+                    steps {
+                        recordIssues enabledForFailure: true,
+                            tool: checkStyle(id: 'detekt', name: 'detekt', pattern: 'app/build/reports/detekt/detekt.xml'),
+                            qualityGates: [[threshold: 1, type: 'NEW', unstable: true]]
+                        recordIssues enabledForFailure: true,
+                            tool: checkStyle(id: 'ktlint', name: 'ktlint', pattern: 'app/build/reports/ktlint/**/*.xml'),
+                            qualityGates: [[threshold: 1, type: 'NEW', unstable: true]]
+                    }
+                }
+                stage('Coverage') {
+                    steps {
+                        bat 'powershell -NoProfile -ExecutionPolicy Bypass -File ci\\coverage-gate.ps1 -Report app/build/reports/coverage/test/debug/report.xml -Min 10'
+                        recordCoverage(
+                            tools: [[parser: 'JACOCO', pattern: 'app/build/reports/coverage/test/debug/report.xml']],
+                            sourceCodeRetention: 'NEVER')
+                    }
+                }
+
+                stage('Build debug APK') {
+                    steps {
+                        bat "${GRADLE} assembleDebug"
+                    }
+                    post {
+                        success {
+                            archiveArtifacts artifacts: 'app/build/outputs/apk/debug/*.apk', fingerprint: true
+                        }
+                    }
+                }
+
             }
         }
 
