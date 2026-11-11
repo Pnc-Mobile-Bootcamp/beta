@@ -70,7 +70,7 @@ pipeline {
         stage('Coverage') {
             steps {
                 bat "${GRADLE} createDebugUnitTestCoverageReport"
-                bat 'powershell -NoProfile -ExecutionPolicy Bypass -File ci\\coverage-gate.ps1 -Report app/build/reports/coverage/test/debug/report.xml -Min 10'
+                bat 'powershell -NoProfile -ExecutionPolicy Bypass -File ci\\coverage-gate.ps1 -Report app/build/reports/coverage/test/debug/report.xml -Min 50'
             }
             post {
                 always {
