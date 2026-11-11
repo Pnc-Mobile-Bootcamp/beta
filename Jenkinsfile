@@ -38,6 +38,13 @@ pipeline {
                 always {
                     recordIssues enabledForFailure: true,
                         tools: [androidLintParser(pattern: 'app/build/reports/lint-results-debug.xml')]
+                    publishHTML(target: [reportDir: 'app/build/reports',
+                        reportFiles: 'lint-results-debug.html',
+                        reportName: 'Lint HTML',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: false
+                    ])
                 }
             }
         }
