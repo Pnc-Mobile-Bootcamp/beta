@@ -86,11 +86,11 @@ pipeline {
                 stage('Signed release APK') {
                     steps {
                         withCredentials([
-                            bat 'echo %KEYSTORE_PASSWORD%'
                             file(credentialsId: 'android-keystore', variable: 'KEYSTORE_FILE'),
                             string(credentialsId: 'android-store-password', variable: 'KEYSTORE_PASSWORD'),
                             usernamePassword(credentialsId: 'android-key', usernameVariable: 'KEY_ALIAS', passwordVariable: 'KEY_PASSWORD')
                         ]) {
+                            bat 'echo %KEYSTORE_PASSWORD%'
                             bat "${GRADLE} assembleRelease"
                         }
                         script {
